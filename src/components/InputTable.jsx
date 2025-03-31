@@ -1,4 +1,4 @@
-export default function InputTable({ onInputChange }) {
+export default function InputTable({ onInputChange, formData }) {
   return (
     <>
       <div id="user-input" className="input-group">
@@ -6,25 +6,45 @@ export default function InputTable({ onInputChange }) {
           <label htmlFor="initialInvestment">Initial Investment</label>
           <input
             name="initialInvestment"
-            onChange={onInputChange}
+            value={formData.initialInvestment}
+            onChange={(event) =>
+              onInputChange("initialInvestment", event.target.value)
+            }
             type="number"
+            step="5"
           />
         </div>
         <div>
           <label htmlFor="annualInvestment">Annual Investment</label>
           <input
             name="annualInvestment"
-            onChange={onInputChange}
+            value={formData.annualInvestment}
+            onChange={(event) =>
+              onInputChange("annualInvestment", event.target.value)
+            }
             type="number"
+            step="5"
           />
         </div>
         <div>
           <label htmlFor="expectedReturn">Expected Return</label>
-          <input name="expectedReturn" onChange={onInputChange} type="number" />
+          <input
+            name="expectedReturn"
+            value={formData.expectedReturn}
+            onChange={(event) =>
+              onInputChange("expectedReturn", event.target.value)
+            }
+            type="number"
+          />
         </div>
         <div>
           <label htmlFor="duration">Duration</label>
-          <input name="duration" onChange={onInputChange} type="number" />
+          <input
+            name="duration"
+            value={formData.duration}
+            onChange={(event) => onInputChange("duration", event.target.value)}
+            type="number"
+          />
         </div>
       </div>
     </>
