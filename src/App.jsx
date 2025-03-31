@@ -2,24 +2,23 @@ import { useState } from "react";
 import Header from "./components/Header";
 import InputTable from "./components/InputTable";
 import OutputTable from "./components/OutputTable";
-import { calculateInvestmentResults } from "./util/investment.js";
 
 function App() {
-  const [formData, setFormData] = useState({
-    initialInvestment: null,
-    annualInvestment: null,
-    expectedReturn: null,
-    duration: null,
-  });
+  const INITIAL_FORM_DATA = {
+    initialInvestment: 5000,
+    annualInvestment: 500,
+    expectedReturn: 5,
+    duration: 10,
+  };
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
-  let outputData = calculateInvestmentResults(formData);
+  const inputIsValid = formData.duration > 0;
 
-  function inputHandler(event) {
-    const { name, value } = event.target;
+  function inputHandler(inputIdentifier, newValue) {
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [name]: value,
+        [inputIdentifier]: +newValue,
       };
     });
   }
@@ -27,7 +26,12 @@ function App() {
   return (
     <>
       <Header />
-      <InputTable onInputChange={inputHandler} />
+      <InputTable onInputChange={inputHandler} formData={formData} />
+      {inputIsValid ? (
+        <OutputTable formData={formData} />
+      ) : (
+        <p className="center">A minimum 1 year duration is required.</p>
+      )}
     </>
   );
 }
